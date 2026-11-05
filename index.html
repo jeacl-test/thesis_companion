@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5546c7">
+  <meta name="description" content="A local-first thesis planning companion.">
+  <title>Thesis Companion</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">T</div><div><strong>Thesis Companion</strong><small>Your research, in rhythm.</small></div></div>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav-item active" data-page="dashboard"><span>◫</span> Overview</button>
+        <button class="nav-item" data-page="chapters"><span>▤</span> Chapters</button>
+        <button class="nav-item" data-page="goals"><span>◎</span> Daily goals</button>
+        <button class="nav-item" data-page="sessions"><span>◷</span> Work sessions</button>
+        <button class="nav-item" data-page="references"><span>⌘</span> References</button>
+        <button class="nav-item" data-page="manuscript"><span>▣</span> Manuscript</button>
+        <button class="nav-item" data-page="backup"><span>⇧</span> Data & backup</button>
+      </nav>
+      <div class="sidebar-note"><span class="spark">✦</span><p>A small step today is still progress.</p></div>
+      <div class="sidebar-footer">v0.1 · Stored on this device</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow" id="todayLabel">YOUR THESIS WORKSPACE</div><h1 id="pageTitle">Overview</h1></div>
+        <div class="top-actions"><span class="local-pill"><i></i> Local data</span><button class="icon-btn" id="quickAdd" title="Add a work session">＋</button></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="hero">
+          <div><div class="eyebrow light">KEEP YOUR MOMENTUM</div><h2>One page at a time.</h2><p>Make your next thesis step visible, manageable, and measurable.</p>
+            <button class="btn btn-light" data-goto="goals">Plan today's work <span>→</span></button>
+          </div>
+          <div class="hero-art"><div class="orb orb-one"></div><div class="orb orb-two"></div><div class="paper">✎<small>THESIS</small></div><div class="hero-star">✦</div></div>
+        </div>
+        <div class="stat-grid">
+          <article class="stat-card lilac"><div class="stat-top"><span>Words written</span><span class="stat-icon">✎</span></div><strong id="statWords">0</strong><small>Total logged words</small></article>
+          <article class="stat-card peach"><div class="stat-top"><span>Pages written</span><span class="stat-icon">▤</span></div><strong id="statPages">0</strong><small>Total logged pages</small></article>
+          <article class="stat-card mint"><div class="stat-top"><span>Work time</span><span class="stat-icon">◷</span></div><strong id="statTime">0h</strong><small>Total recorded time</small></article>
+          <article class="stat-card blue"><div class="stat-top"><span>References</span><span class="stat-icon">⌘</span></div><strong id="statRefs">0</strong><small>In your bibliography</small></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel">
+            <div class="panel-heading"><div><div class="eyebrow">YOUR STRUCTURE</div><h3>Chapter progress</h3></div><button class="text-btn" data-goto="chapters">Manage chapters →</button></div>
+            <div id="dashboardChapters" class="chapter-progress-list"></div>
+          </article>
+          <article class="panel goal-panel">
+            <div class="panel-heading"><div><div class="eyebrow">TODAY</div><h3>Daily target</h3></div><span class="today-chip" id="goalDate"></span></div>
+            <div class="goal-ring-wrap"><div class="goal-ring" id="goalRing"><div><strong id="goalPercent">0%</strong><small>completed</small></div></div></div>
+            <div class="goal-line"><span>Words target</span><strong id="goalProgressText">0 / 500 words</strong></div>
+            <div class="progress-track"><div id="goalProgressBar" class="progress-fill"></div></div>
+            <button class="btn btn-primary full" data-goto="goals">Update today's goal</button>
+          </article>
+        </div>
+        <article class="panel recent-panel">
+          <div class="panel-heading"><div><div class="eyebrow">RECENT ACTIVITY</div><h3>Latest work sessions</h3></div><button class="text-btn" data-goto="sessions">All sessions →</button></div>
+          <div id="recentSessions" class="empty-state">No sessions yet. Your first focused block can go here.</div>
+        </article>
+      </section>
+
+      <section class="page" id="page-chapters">
+        <div class="section-intro"><div><h2>Build your thesis structure</h2><p>Add, rename, reorder, and track the chapters that make sense for your thesis.</p></div><button class="btn btn-primary" id="addChapter">＋ Add chapter</button></div>
+        <div class="summary-strip"><div><strong id="chapterCount">0</strong><span>chapters</span></div><div><strong id="chapterAverage">0%</strong><span>average progress</span></div><div><strong id="chapterDone">0</strong><span>completed</span></div></div>
+        <div id="chapterList" class="chapter-list"></div>
+      </section>
+
+      <section class="page" id="page-goals">
+        <div class="section-intro"><div><h2>Make today count</h2><p>Set a realistic target and record what you have achieved.</p></div></div>
+        <div class="goal-layout">
+          <article class="panel goal-main">
+            <div class="panel-heading"><div><div class="eyebrow">DAILY CHECK-IN</div><h3 id="goalHeading">Today's goal</h3></div><span class="today-chip" id="goalDate2"></span></div>
+            <div class="goal-big"><strong id="goalWordsBig">0</strong><span>words logged today</span></div>
+            <div class="progress-track tall"><div id="goalBarBig" class="progress-fill"></div></div>
+            <p class="muted" id="goalMotivation">Every word counts. Start where you are.</p>
+            <form id="dailyLogForm" class="form-grid">
+              <label>Words written today<input type="number" id="dailyWords" min="0" value="0"></label>
+              <label>Pages written today<input type="number" id="dailyPages" min="0" step="0.1" value="0"></label>
+              <label>Daily word target<input type="number" id="dailyTarget" min="1" value="500"></label>
+              <div class="form-actions"><button class="btn btn-primary" type="submit">Save today's progress</button></div>
+            </form>
+          </article>
+          <article class="panel">
+            <div class="eyebrow">A LITTLE STRUCTURE</div><h3>Suggested rhythm</h3>
+            <div class="rhythm-list"><div><b>01</b><span><strong>Choose one task</strong><small>Make it concrete and small.</small></span></div><div><b>02</b><span><strong>Focus for 25–50 min</strong><small>Protect one block of attention.</small></span></div><div><b>03</b><span><strong>Record your progress</strong><small>Words, pages, or a useful result.</small></span></div></div>
+          </article>
+        </div>
+        <article class="panel history-panel"><div class="panel-heading"><div><div class="eyebrow">RECENT DAYS</div><h3>Writing history</h3></div></div><div id="dailyHistory" class="history-list"></div></article>
+      </section>
+
+      <section class="page" id="page-sessions">
+        <div class="section-intro"><div><h2>Work sessions</h2><p>Track focused time and connect each session to a chapter.</p></div></div>
+        <div class="session-layout">
+          <article class="panel timer-panel">
+            <div class="eyebrow">FOCUS TIMER</div><h3>Give your work a space.</h3>
+            <div class="timer-display" id="timerDisplay">00:00:00</div>
+            <div class="timer-controls"><button class="btn btn-primary" id="timerStart">Start focus</button><button class="btn btn-soft" id="timerStop" disabled>Finish session</button></div>
+            <p class="muted" id="timerStatus">The timer runs while this page is open.</p>
+          </article>
+          <article class="panel">
+            <div class="eyebrow">MANUAL ENTRY</div><h3>Log a past session</h3>
+            <form id="sessionForm" class="form-grid">
+              <label>Date<input type="date" id="sessionDate" required></label>
+              <label>Duration (minutes)<input type="number" id="sessionMinutes" min="1" value="45" required></label>
+              <label>Words written<input type="number" id="sessionWords" min="0" value="0"></label>
+              <label>Pages written<input type="number" id="sessionPages" min="0" step="0.1" value="0"></label>
+              <label class="span-2">Chapter<select id="sessionChapter"><option value="">General / not linked</option></select></label>
+              <label class="span-2">What did you work on?<input type="text" id="sessionNote" placeholder="e.g. Revised the collisional narrowing section"></label>
+              <div class="form-actions"><button class="btn btn-primary" type="submit">Save session</button></div>
+            </form>
+          </article>
+        </div>
+        <article class="panel"><div class="panel-heading"><div><div class="eyebrow">YOUR LOG</div><h3>All work sessions</h3></div><span class="today-chip" id="sessionTotal">0 sessions</span></div><div id="sessionList" class="session-list"></div></article>
+      </section>
+
+      <section class="page" id="page-references">
+        <div class="section-intro"><div><h2>Reference library</h2><p>Keep useful papers and their BibTeX details close to your writing workflow.</p></div><button class="btn btn-primary" id="addReference">＋ Add reference</button></div>
+        <div class="reference-tools"><input id="referenceSearch" type="search" placeholder="Search title, author, year, DOI…"><button class="btn btn-soft" id="exportBib">Export .bib</button></div>
+        <div id="referenceList" class="reference-list"></div>
+      </section>
+
+      <section class="page" id="page-manuscript">
+        <div class="section-intro"><div><h2>My manuscript</h2><p>Keep a reading copy of your latest thesis PDF on this device.</p></div></div>
+        <article class="panel manuscript-import">
+          <div class="manuscript-file-row">
+            <div class="backup-icon">▣</div>
+            <div class="manuscript-file-info"><h3 id="pdfName">No PDF uploaded</h3><p id="pdfStatus">Import your compiled thesis PDF. It will be stored locally on this device.</p></div>
+            <label class="btn btn-primary file-label">Choose PDF<input type="file" id="pdfUpload" accept="application/pdf,.pdf"></label>
+          </div>
+          <div class="manuscript-actions" id="pdfActions" hidden><span class="muted" id="pdfSize"></span><button class="btn btn-soft" id="pdfOpenNew" type="button">Open separately</button><button class="btn btn-danger" id="pdfDelete" type="button">Remove PDF</button></div>
+          <p class="privacy-note">Your PDF is saved in this browser's local storage (IndexedDB), not uploaded to a server. Keep your original PDF and a separate backup: clearing site data or uninstalling the app can remove this local copy.</p>
+        </article>
+        <article class="panel reader-panel" id="readerPanel" hidden>
+          <div class="reader-toolbar"><div><strong>PDF reader</strong><small id="readerHint">Your last reading position is saved on this device.</small></div><div class="reader-page-control"><label for="pdfPage">Page</label><input type="number" id="pdfPage" min="1" value="1"><button class="btn btn-soft" id="pdfGoPage" type="button">Go</button></div></div>
+          <iframe id="pdfFrame" title="Thesis PDF reader" class="pdf-frame"></iframe>
+        </article>
+      </section>
+
+      <section class="page" id="page-backup">
+        <div class="section-intro"><div><h2>Your data, your device</h2><p>Thesis Companion stores its information in this browser. Export a backup regularly.</p></div></div>
+        <div class="backup-grid">
+          <article class="panel"><div class="backup-icon">⇩</div><h3>Export a backup</h3><p>Download all chapters, goals, sessions, and references as a JSON file.</p><button class="btn btn-primary" id="exportJson">Download backup</button></article>
+          <article class="panel"><div class="backup-icon">⇧</div><h3>Restore a backup</h3><p>Import a previous JSON backup. This replaces the data currently stored in this browser.</p><label class="btn btn-soft file-label">Choose backup file<input type="file" id="importJson" accept=".json,application/json"></label></article>
+          <article class="panel danger-panel"><div class="backup-icon">⌫</div><h3>Reset this workspace</h3><p>Permanently clear all Thesis Companion data stored in this browser. Export a backup first if you may need it.</p><button class="btn btn-danger" id="resetData">Reset all data</button></article>
+        </div>
+        <div class="privacy-note"><strong>Important:</strong> data is not automatically synchronised between devices. Clearing browser/site data or uninstalling the app may remove it. Keep a JSON backup somewhere safe.</div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="chapterDialog" class="modal">
+    <form method="dialog" id="chapterForm"><div class="modal-head"><div><div class="eyebrow">THESIS STRUCTURE</div><h3 id="chapterDialogTitle">Add a chapter</h3></div><button class="close-btn" value="cancel" aria-label="Close">×</button></div>
+      <input type="hidden" id="chapterId"><label>Chapter title<input id="chapterTitle" required placeholder="e.g. Theoretical background"></label>
+      <div class="form-grid"><label>Progress (%)<input id="chapterProgress" type="number" min="0" max="100" value="0"></label><label>Status<select id="chapterStatus"><option>Not started</option><option>In progress</option><option>Review</option><option>Completed</option></select></label></div>
+      <label>Notes (optional)<textarea id="chapterNotes" rows="3" placeholder="Subsections, next steps, reminders…"></textarea></label>
+      <div class="modal-actions"><button class="btn btn-soft" value="cancel">Cancel</button><button class="btn btn-primary" id="saveChapter" value="default">Save chapter</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="referenceDialog" class="modal">
+    <form method="dialog" id="referenceForm"><div class="modal-head"><div><div class="eyebrow">BIBLIOGRAPHY</div><h3 id="referenceDialogTitle">Add a reference</h3></div><button class="close-btn" value="cancel" aria-label="Close">×</button></div>
+      <input type="hidden" id="referenceId">
+      <label>Title<input id="refTitle" required placeholder="Article or book title"></label>
+      <div class="form-grid"><label>Authors<input id="refAuthors" placeholder="Surname, A. and Surname, B."></label><label>Year<input id="refYear" type="number" min="1500" max="2200" placeholder="2026"></label></div>
+      <div class="form-grid"><label>Journal / publisher<input id="refJournal" placeholder="Journal name"></label><label>DOI<input id="refDoi" placeholder="10.xxxx/xxxxx"></label></div>
+      <div class="form-grid"><label>BibTeX key<input id="refKey" placeholder="AuthorYearTitle"></label><label>Type<select id="refType"><option value="article">Article</option><option value="book">Book</option><option value="inproceedings">Conference paper</option><option value="misc">Other</option></select></label></div>
+      <label>Notes<textarea id="refNotes" rows="3" placeholder="Why is this reference useful?"></textarea></label>
+      <div class="modal-actions"><button class="btn btn-soft" value="cancel">Cancel</button><button class="btn btn-primary" id="saveReference" value="default">Save reference</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

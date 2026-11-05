@@ -1,0 +1,11 @@
+{
+  "name": "Thesis Companion",
+  "short_name": "Thesis",
+  "description": "A local-first thesis planning companion.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f6fb",
+  "theme_color": "#456477",
+  "icons": []
+}
